@@ -28,7 +28,7 @@ export default function LoginPage() {
         }} 
          />
         <br/>
-        <Button variant="contained" color="primary" size="medium">
+        <Button variant="contained" color="primary" size="large" style={{width: '80%'}}>
             Entrar
         </Button>
       </CardCustom>
