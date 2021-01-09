@@ -28,10 +28,18 @@ export default function ModalCandidato({
     { id: 4, description: "Vue.js", isSelected: false },
   ]);
 
+  const submit = useCallback(
+    async (data) => {
+      const selecteds = skillData.filter((v) => v.isSelected === true);
+      await handler({ ...data, skills: selecteds });
+    },
+    [skillData]
+  );
+
   useEffect(() => {
     function init() {
       const { skills } = initialData;
-      if(!skills) return;
+      if (!skills) return;
       skills.forEach((skl) => {
         setSkillData((data) => {
           return data.map((v) => {
@@ -49,7 +57,7 @@ export default function ModalCandidato({
   const setSkill = useCallback((skill) => {
     setSkillData((data) => {
       return data.map((v) => {
-        if (skill.label === v.label) {
+        if (skill.description === v.description) {
           v.isSelected = !v.isSelected;
         }
         return v;
@@ -75,9 +83,14 @@ export default function ModalCandidato({
           <span>Registrar Novo Candidato</span>
         </Information>
         <Form
-          onSubmit={handler}
+          onSubmit={submit}
           schema={schema}
-          initialData={{ nome: "Zaqueu", email: "joao@maili", idade: "45",...initialData }}
+          initialData={{
+            nome: "Zaqueu",
+            email: "joao@maili",
+            idade: "45",
+            ...initialData,
+          }}
         >
           <TextField name="nome" label="Nome" />
           <TextField name="email" label="Email" />
