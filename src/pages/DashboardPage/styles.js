@@ -6,25 +6,26 @@ export const ContainerCustom = styled(Container)`
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 100vh;
+  /* height: 100vh; */
 `;
 export const CardCustom = styled(Card)`
-  width: 50%;
-  min-width: 320px;
-  max-width: 400px;
-  padding-bottom: 2%;
-  form {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-  }
-
-  .MuiTextField-root {
-    width: 80%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align-last: center;
+  flex-direction: column;
+  height: 100%;
+  padding: 5px;
+  h6 {
+    text-align: center;
+    word-wrap: break-word;
   }
 `;
 export const ImageContent = styled.img`
   margin: 15px;
-  border-radius: 10%;
+  width: 35%;
+  border-radius: 50%;
 `;
+
+export const ContentText = styled.div``;
+export const ContentButton = styled.div``;
