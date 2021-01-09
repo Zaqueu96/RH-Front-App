@@ -5,14 +5,9 @@ import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
 import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import { CardCustom, ImageContent, ContentText, ContentButton } from "./styles";
-import {
-    Button,
-    Typography,
-    IconButton,
-    Chip
-  } from "@material-ui/core";
+import { Button, Typography, IconButton, Chip } from "@material-ui/core";
 export default function Index({ candidato }) {
-    const k = 0;
+  const k = 0;
   return (
     <CardCustom>
       <ImageContent
@@ -30,9 +25,8 @@ export default function Index({ candidato }) {
           {Array(Math.round(Math.random() * 25))
             .fill()
             .map((i, j) => {
-              return <Chip label={`Skill ${j}`}    style={{margin:'2px'}}/>
-            })
-            }
+              return <Chip label={`Skill ${j}`} style={{ margin: "2px" }} />;
+            })}
         </Typography>
       </PerfectScrollbar>
       <ContentText style={{ width: "100%" }}>
