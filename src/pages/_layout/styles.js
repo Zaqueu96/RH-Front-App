@@ -5,6 +5,7 @@ export const ContainerCustom = styled(Container)`
   display: flex;
   justify-content: center;
   flex-direction: column;
+  text-align: -webkit-center;
 `;
 export const Header = styled.div`
   min-height: 100px;
@@ -14,8 +15,7 @@ export const Header = styled.div`
   }
 `;
 export const Content = styled(Paper)`
-  border: 1px solid black;
-  width: 90%;
+  width: 100%;
 `;
 
 export const Footer = styled.div``;
