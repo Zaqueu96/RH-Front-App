@@ -32,6 +32,7 @@ function TextInput({ name, ...rest }) {
         defaultValue={defaultValue}
         helperText={error}
         onChange={change}
+        variant="outlined"
         {...rest}
       />
       <input ref={inputRef} name={fieldName} type="hidden" value={value} />
