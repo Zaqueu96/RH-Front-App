@@ -6,8 +6,10 @@ import LinkedInIcon from "@material-ui/icons/LinkedIn";
 import { CardCustom, ImageContent, ContentText, ContentButton } from "./styles";
 import { Button, Typography, IconButton, Chip } from "@material-ui/core";
 import ModalCandidato from "../../components/ModalCandidato";
+import ComfirmDelete from "../ConfirmDelete";
 export default function Index({ candidato }) {
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const [isOpenModalDel, setIsOpenModalDel] = useState(false);
   const { skills } = candidato;
 
   function openLink() {
@@ -16,6 +18,11 @@ export default function Index({ candidato }) {
 
   return (
     <>
+      <ComfirmDelete
+        isOpen={isOpenModalDel}
+        candidato={candidato}
+        handleClose={() => setIsOpenModalDel(false)}
+      />
       <ModalCandidato
         isOpen={isOpenModal}
         handler={() => setIsOpenModal(false)}
@@ -76,6 +83,7 @@ export default function Index({ candidato }) {
               <EditIcon />
             </IconButton>
             <IconButton
+              onClick={() => setIsOpenModalDel(true)}
               aria-label="delete"
               title="Remover este Candidato"
               color="secondary"

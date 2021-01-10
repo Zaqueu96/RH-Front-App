@@ -24,11 +24,16 @@ export default function ModalCandidato({
   initialData,
 }) {
   const [skillData, setSkillData] = useState([]);
+  const [isErrorSkill, setIsErrorSkill] = useState(false);
 
   const submit = useCallback(
     async (data) => {
       try {
         const selecteds = skillData.filter((v) => v.isSelected === true);
+        if (selecteds.length <= 0) {
+          toast.error("Informe ao menos uma Skill...");
+          return;
+        }
         if (isEdit) {
           await candidateApi.update(initialData.id, {
             ...data,
@@ -42,6 +47,7 @@ export default function ModalCandidato({
           });
         }
         toast.success("Ação realizada com sucesso...");
+        document.location.reload();
         await handler();
       } catch (err) {
         toast.error(
@@ -51,7 +57,7 @@ export default function ModalCandidato({
         );
       }
     },
-    [skillData, handler]
+    [skillData, handler, isEdit, initialData.id, setIsErrorSkill]
   );
 
   useEffect(() => {
@@ -124,7 +130,7 @@ export default function ModalCandidato({
               );
             })}
           </FieldSetBox>
-          <ContentError>
+          <ContentError isError={isErrorSkill}>
             <p className="MuiFormHelperText-root MuiFormHelperText-contained Mui-error">
               Escolha ao menos uma Skill
             </p>

@@ -1,9 +1,10 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import { Container as ContainerMD } from "@material-ui/core";
 export const Container = styled(ContainerMD)`
   background: #fff;
   /* height: 50%; */
-  width: 50%!important;
+  width: 50% !important;
+  max-width: 600px;
   border-radius: 2%;
   padding: 15px;
   form {
@@ -41,5 +42,14 @@ export const FieldSetBox = styled.fieldset`
 `;
 export const Legend = styled.legend``;
 export const ContentError = styled.div`
+  display: none;
   width: 100%;
+  ${(props) =>
+    props.isError &&
+    css`
+      p {
+        display: inline;
+        color: red;
+      }
+    `}
 `;
