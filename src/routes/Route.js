@@ -4,6 +4,7 @@ import PropTypes from "prop-types";
 import { Route, useHistory } from "react-router-dom";
 
 import DefaultLayout from "../pages/_layout";
+import store from "../services/store";
 
 export default function RouteWrapper({
   component: Component,
@@ -11,9 +12,14 @@ export default function RouteWrapper({
   layout,
   ...rest
 }) {
-  const signed = false;
+  const token = store.token;
   const history = useHistory();
-  if (!signed && history.location.pathname !== "/" && !isPublic) {
+
+  if (token && history.location.pathname === "/" && isPublic) {
+    history.push("/dashboard");
+  }
+
+  if (!token && history.location.pathname !== "/" && !isPublic) {
     history.push("/");
   }
 
