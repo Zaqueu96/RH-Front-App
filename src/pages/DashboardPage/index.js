@@ -9,6 +9,7 @@ import {
   Chip,
   MenuItem,
 } from "@material-ui/core";
+import { toast } from "react-toastify";
 import { ContainerCustom, ContentSkill, ContentFilter } from "./styles";
 import CardCandidato from "../../components/CardCandidato";
 import TextField from "../../components/TextInput";
@@ -33,9 +34,12 @@ export default function DashboardPage() {
 
   useEffect(() => {
     async function get() {
-      const { data, error, status } = await candidateApi.list(filters);
-      console.log("data,error,status", { data, error, status });
-      setCandidates(data);
+      try {
+        const { data } = await candidateApi.list(filters);
+        setCandidates(data);
+      } catch (err) {
+        toast.error("Ocorreu um error ao carregar a lista de candidatos");
+      }
     }
     get();
   }, []);
@@ -84,8 +88,11 @@ export default function DashboardPage() {
       <Grid container spacing={3}>
         {candidates.map((candidato, k) => {
           return (
-            <Grid key={`${k}`} item xs={6} sm={3}>
-              <CardCandidato candidato={candidato} />
+            <Grid key={`${k}_${candidato.id}`} item xs={6} sm={3}>
+              <CardCandidato
+                key={`${k}_${candidato.id}_${candidato.email}`}
+                candidato={candidato}
+              />
             </Grid>
           );
         })}

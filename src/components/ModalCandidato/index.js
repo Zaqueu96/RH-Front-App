@@ -8,12 +8,14 @@ import {
   Legend,
   ContentError,
 } from "./styles";
-
+import { toast } from "react-toastify";
 import DoneIcon from "@material-ui/icons/Done";
 import Form from "../Form";
 import TextField from "../TextInput";
 import schema from "./schema";
 import PropTypes from "prop-types";
+import skillApi from "../../services/skillApi";
+import candidateApi from "../../services/candidateApi";
 export default function ModalCandidato({
   isOpen,
   isEdit,
@@ -21,31 +23,49 @@ export default function ModalCandidato({
   closeModal,
   initialData,
 }) {
-  const [skillData, setSkillData] = useState([
-    { id: 0, description: "Angular", isSelected: false },
-    { id: 1, description: "jQuery", isSelected: false },
-    { id: 2, description: "Polymer", isSelected: false },
-    { id: 3, description: "React", isSelected: false },
-    { id: 4, description: "Vue.js", isSelected: false },
-  ]);
+  const [skillData, setSkillData] = useState([]);
 
   const submit = useCallback(
     async (data) => {
-      const selecteds = skillData.filter((v) => v.isSelected === true);
-      await handler({ ...data, skills: selecteds });
+      try {
+        const selecteds = skillData.filter((v) => v.isSelected === true);
+        if (isEdit) {
+          await candidateApi.update(initialData.id, {
+            ...data,
+            skills: selecteds,
+          });
+        }
+        if (!isEdit) {
+          await candidateApi.store({
+            ...data,
+            skills: selecteds,
+          });
+        }
+        toast.success("Ação realizada com sucesso...");
+        await handler();
+      } catch (err) {
+        toast.error(
+          isEdit
+            ? "Ocorreu um erro ao tentar atualizar este candidato...."
+            : "Ocorreu um erro ao criar este usuário"
+        );
+      }
     },
-    [skillData]
+    [skillData, handler]
   );
 
   useEffect(() => {
-    function init() {
+    async function init() {
       const { skills } = initialData;
+      const { data: dataR } = await skillApi.list();
+      setSkillData(dataR);
+      console.log(skillData);
       if (!skills) return;
       skills.forEach((skl) => {
         setSkillData((data) => {
           return data.map((v) => {
-            if (skl.description === v.description) {
-              v.isSelected = !v.isSelected;
+            if (skl.id === v.id) {
+              v.isSelected = true;
             }
             return v;
           });
@@ -58,7 +78,7 @@ export default function ModalCandidato({
   const setSkill = useCallback((skill) => {
     setSkillData((data) => {
       return data.map((v) => {
-        if (skill.description === v.description) {
+        if (skill.id === v.id) {
           v.isSelected = !v.isSelected;
         }
         return v;
@@ -81,18 +101,9 @@ export default function ModalCandidato({
     >
       <Container>
         <Information>
-          <span>{`${isEdit ? "Registrar Novo" : "Editar"} Candidato`}</span>
+          <span>{`${!isEdit ? "Registrar Novo" : "Editar"} Candidato`}</span>
         </Information>
-        <Form
-          onSubmit={submit}
-          schema={schema}
-          initialData={{
-            nome: "Zaqueu",
-            email: "joao@maili",
-            idade: "45",
-            ...initialData,
-          }}
-        >
+        <Form onSubmit={submit} schema={schema} initialData={initialData}>
           <TextField name="nome" label="Nome" />
           <TextField name="email" label="Email" />
           <TextField name="linkedin" label="Linkedin" />
@@ -105,7 +116,7 @@ export default function ModalCandidato({
                   key={v.id}
                   clickable
                   color="primary"
-                  label={v.description}
+                  label={v.name}
                   clickable
                   icon={v.isSelected ? <DoneIcon /> : null}
                   onClick={() => setSkill(v)}
@@ -114,7 +125,7 @@ export default function ModalCandidato({
             })}
           </FieldSetBox>
           <ContentError>
-            <p class="MuiFormHelperText-root MuiFormHelperText-contained Mui-error">
+            <p className="MuiFormHelperText-root MuiFormHelperText-contained Mui-error">
               Escolha ao menos uma Skill
             </p>
           </ContentError>

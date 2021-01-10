@@ -1,5 +1,4 @@
-import React, { useState } from "react";
-
+import React, { useState, useCallback } from "react";
 import PerfectScrollbar from "react-perfect-scrollbar";
 import DeleteIcon from "@material-ui/icons/Delete";
 import EditIcon from "@material-ui/icons/Edit";
@@ -8,18 +7,18 @@ import { CardCustom, ImageContent, ContentText, ContentButton } from "./styles";
 import { Button, Typography, IconButton, Chip } from "@material-ui/core";
 import ModalCandidato from "../../components/ModalCandidato";
 export default function Index({ candidato }) {
-  const k = 0;
   const [isOpenModal, setIsOpenModal] = useState(false);
   const { skills } = candidato;
 
   function openLink() {
     window.open(candidato.linkedin);
   }
+
   return (
     <>
       <ModalCandidato
         isOpen={isOpenModal}
-        handler={(data) => console.log(data)}
+        handler={() => setIsOpenModal(false)}
         closeModal={() => setIsOpenModal(false)}
         initialData={{ ...candidato }}
         isEdit={true}
@@ -40,7 +39,13 @@ export default function Index({ candidato }) {
         <PerfectScrollbar style={{ maxWidth: "100%" }}>
           <Typography variant="subtitle2" color="textSecondary" gutterBottom>
             {skills.map((skill, j) => {
-              return <Chip label={skill.name} style={{ margin: "2px" }} />;
+              return (
+                <Chip
+                  key={skill.name}
+                  label={skill.name}
+                  style={{ margin: "2px" }}
+                />
+              );
             })}
           </Typography>
         </PerfectScrollbar>

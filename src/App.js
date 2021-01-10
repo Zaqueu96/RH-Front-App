@@ -1,15 +1,18 @@
-import logo from './logo.svg';
-import './App.css';
-import 'react-perfect-scrollbar/dist/css/styles.css';
+import logo from "./logo.svg";
+import "./App.css";
+import "react-perfect-scrollbar/dist/css/styles.css";
 
+import "react-toastify/dist/ReactToastify.css";
 
-import { BrowserRouter as Router } from 'react-router-dom';
-import Routes from './routes'
+import { ToastContainer } from "react-toastify";
+import { BrowserRouter as Router } from "react-router-dom";
+import Routes from "./routes";
 function App() {
   return (
-    <Router >
-    <Routes />
-  </Router>
+    <Router>
+      <Routes />
+      <ToastContainer />
+    </Router>
   );
 }
 
