@@ -36,3 +36,7 @@
     transform: rotate(360deg);
   }
 }
+
+#root .MuiButton-containedPrimary {
+  background-color: #1976d2;
+}

@@ -7,7 +7,7 @@ class CandidateApi {
 
   list({ nameOrEmail = null, skills = null }) {
     let params = {};
-    if (nameOrEmail) params.nameOremail = nameOrEmail;
+    if (nameOrEmail) params.nameOrEmail = nameOrEmail;
     if (skills) params.skills = skills;
     return api.get(this.prefix, { params: { ...params } });
   }

@@ -6,16 +6,21 @@ import {
   Paper,
   Typography,
   IconButton,
+  Button,
   Menu,
   MenuItem,
 } from "@material-ui/core";
-import { Content, ContainerCustom, Header, Footer } from "./styles";
+import { Content, ContainerCustom, Header } from "./styles";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import store from "../../services/store";
 import auth from "../../services/auth";
+import AddIcon from "@material-ui/icons/Add";
+import ModalCandidato from "../../components/ModalCandidato";
+
 export default function Layout({ children }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
+  const [isOpenModal, setIsOpenModal] = useState(false);
   const handleMenu = (event) => {
     setAnchorEl(event.currentTarget);
     setMenuOpen(true);
@@ -23,6 +28,11 @@ export default function Layout({ children }) {
 
   return (
     <ContainerCustom maxWidth="false">
+      <ModalCandidato
+        isOpen={isOpenModal}
+        handler={() => setIsOpenModal(false)}
+        closeModal={() => setIsOpenModal(false)}
+      />
       <Header>
         <AppBar>
           <Toolbar>
@@ -32,6 +42,14 @@ export default function Layout({ children }) {
             <div>
               {store.token && (
                 <>
+                  <Button
+                    variant="contained"
+                    size="small"
+                    endIcon={<AddIcon />}
+                    onClick={() => setIsOpenModal(true)}
+                  >
+                    Add Novo Candidato
+                  </Button>
                   <IconButton
                     aria-controls="menu-appbar"
                     aria-haspopup="true"
@@ -64,9 +82,6 @@ export default function Layout({ children }) {
         </AppBar>
       </Header>
       <Content>{children}</Content>
-      {/* <Footer>
-        <Typography variant="subtitle2">Gerenciamento de candidatos</Typography>
-      </Footer> */}
     </ContainerCustom>
   );
 }
