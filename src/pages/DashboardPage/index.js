@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useCallback, useEffect } from "react";
 import {
   Grid,
   Container,
@@ -14,6 +14,7 @@ import CardCandidato from "../../components/CardCandidato";
 import TextField from "../../components/TextInput";
 import Form from "../../components/Form";
 import SearchIcon from "@material-ui/icons/SearchOutlined";
+import candidateApi from "../../services/candidateApi";
 export default function DashboardPage() {
   const names = Array(9)
     .fill()
@@ -21,9 +22,21 @@ export default function DashboardPage() {
       return `Skill nº${k}`;
     });
   const [selected, setSelected] = useState([]);
+  const [filters, setFilters] = useState({
+    nameOrEmail: null,
+    skills: null,
+  });
   const handleChange = (event) => {
     setSelected(event.target.value);
   };
+
+  useEffect(() => {
+    async function get() {
+      const { data, error, status } = await candidateApi.list(filters);
+      console.log("data,error,status", { data, error, status });
+    }
+    get();
+  }, []);
 
   return (
     <ContainerCustom>

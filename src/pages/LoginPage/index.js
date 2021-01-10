@@ -19,11 +19,11 @@ export default function LoginPage() {
     async ({ email, password }) => {
       console.log("ada: ", { email, password });
       const { data } = await auth.login({ email, password });
-      if (data.error && !data.token) {
+      if (data.error && !data.access_token) {
         setIsError(true);
         return;
       }
-      store.setToken(data.token);
+      store.setToken(data.access_token.token);
       history.push("/dashboard");
       return;
     },

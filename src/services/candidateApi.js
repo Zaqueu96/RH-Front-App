@@ -5,8 +5,11 @@ class CandidateApi {
     this.prefix = "/api/v1/candidates";
   }
 
-  list({ nameOremail, skills }) {
-    return api.get(this.prefix, { params: { nameOremail, skills } });
+  list({ nameOrEmail = null, skills = null }) {
+    let params = {};
+    if (nameOrEmail) params.nameOremail = nameOrEmail;
+    if (skills) params.skills = skills;
+    return api.get(this.prefix, { params: { ...params } });
   }
 
   show(candidateId) {
@@ -18,11 +21,11 @@ class CandidateApi {
   }
 
   update(candidateId, data) {
-    return api.put(`${this.prefix}/${candidateId}`, {...data });
+    return api.put(`${this.prefix}/${candidateId}`, { ...data });
   }
 
   store(data) {
-    return api.post(`${this.prefix}`, {...data });
+    return api.post(`${this.prefix}`, { ...data });
   }
 }
 

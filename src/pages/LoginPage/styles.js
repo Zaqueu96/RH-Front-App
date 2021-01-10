@@ -30,6 +30,6 @@ export const ImageContent = styled.img`
 `;
 
 export const SpanError = styled.span`
-    margin-bottom: 10px;
-    color: red;
-}`;
+  margin-bottom: 10px;
+  color: red;
+`;
