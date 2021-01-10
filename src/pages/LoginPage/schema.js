@@ -8,10 +8,5 @@ const schema = Yup.object().shape({
   password: Yup.string().required(
     'Informe a senha'
   ),
-}).test({
-    message:"",
-    test:(data)=>{
-        console.log("message: ",data)
-    }
 })
 export default schema;

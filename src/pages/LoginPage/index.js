@@ -1,21 +1,45 @@
-import React from "react";
+import React, { useCallback, useState } from "react";
 import { Button } from "@material-ui/core";
-import { ContainerCustom, CardCustom,ImageContent } from "./styles";
+import { ContainerCustom, CardCustom, ImageContent } from "./styles";
 import EmailIcon from "@material-ui/icons/EmailOutlined";
 import PassIcon from "@material-ui/icons/LockOutlined";
 import InputAdornment from "@material-ui/core/InputAdornment";
-import Form from '../../components/Form'
-import schema from './schema';
-import TextField from '../../components/TextInput'
+import Form from "../../components/Form";
+import schema from "./schema";
+import TextField from "../../components/TextInput";
+import { useHistory } from "react-router";
 // import { TextField } from "unform-material-ui";
-
+import auth from "../../services/auth";
+import store from "../../services/store";
+import { SpanError } from "./styles";
 export default function LoginPage() {
+  const history = useHistory();
+  const [isError, setIsError] = useState(false);
+  const authSubmit = useCallback(
+    async ({ email, password }) => {
+      console.log("ada: ", { email, password });
+      const { data } = await auth.login({ email, password });
+      if (data.error && !data.token) {
+        setIsError(true);
+        return;
+      }
+      store.setToken(data.token);
+      history.push("/dashboard");
+      return;
+    },
+    [history]
+  );
   return (
     <ContainerCustom>
-      <CardCustom> 
-        <Form id="form" onSubmit={(data) => console.log(data)} schema={schema}>
-          <ImageContent  alt="image " src="https://ui-avatars.com/api/?size=128&name=RH&background=0D8ABC&color=fff" />
+      <CardCustom>
+        <Form id="form" onSubmit={authSubmit} schema={schema}>
+          <ImageContent
+            alt="image "
+            src="https://ui-avatars.com/api/?size=128&name=RH&background=0D8ABC&color=fff"
+          />
           <h1>Login RH</h1>
+
+          {isError && <SpanError>Usuário ou senhas inválidas</SpanError>}
           <TextField
             label="E-mail"
             name="email"

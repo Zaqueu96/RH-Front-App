@@ -28,3 +28,8 @@ export const ImageContent = styled.img`
   margin: 15px;
   border-radius: 10%;
 `;
+
+export const SpanError = styled.span`
+    margin-bottom: 10px;
+    color: red;
+}`;

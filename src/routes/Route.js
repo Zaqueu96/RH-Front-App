@@ -9,7 +9,6 @@ import store from "../services/store";
 export default function RouteWrapper({
   component: Component,
   isPublic,
-  layout,
   ...rest
 }) {
   const token = store.token;
@@ -23,7 +22,7 @@ export default function RouteWrapper({
     history.push("/");
   }
 
-  const Layout = layout || DefaultLayout;
+  const Layout = DefaultLayout;
   return (
     <Route
       {...rest}
@@ -40,9 +39,7 @@ RouteWrapper.propTypes = {
   component: PropTypes.oneOfType([PropTypes.element, PropTypes.func])
     .isRequired,
   isPublic: PropTypes.bool,
-  layout: PropTypes.oneOfType([PropTypes.element, PropTypes.func]),
 };
 RouteWrapper.defaultProps = {
   isPublic: false,
-  layout: null,
 };

@@ -12,6 +12,7 @@ import {
 import { Content, ContainerCustom, Header, Footer } from "./styles";
 import AccountCircle from "@material-ui/icons/AccountCircle";
 import store from "../../services/store";
+import auth from "../../services/auth";
 export default function Layout({ children }) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [anchorEl, setAnchorEl] = useState(null);
@@ -55,7 +56,7 @@ export default function Layout({ children }) {
                     open={menuOpen}
                     onClose={() => setMenuOpen(false)}
                   >
-                    <MenuItem onClick={() => {}}>Sair</MenuItem>
+                    <MenuItem onClick={auth.logout}>Sair</MenuItem>
                   </Menu>
                 </>
               )}
