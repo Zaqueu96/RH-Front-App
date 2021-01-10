@@ -26,6 +26,7 @@ export default function DashboardPage() {
     nameOrEmail: null,
     skills: null,
   });
+  const [candidates, setCandidates] = useState([]);
   const handleChange = (event) => {
     setSelected(event.target.value);
   };
@@ -34,6 +35,7 @@ export default function DashboardPage() {
     async function get() {
       const { data, error, status } = await candidateApi.list(filters);
       console.log("data,error,status", { data, error, status });
+      setCandidates(data);
     }
     get();
   }, []);
@@ -80,15 +82,13 @@ export default function DashboardPage() {
         </Container>
       </ContentFilter>
       <Grid container spacing={3}>
-        {Array(15)
-          .fill()
-          .map((v, k) => {
-            return (
-              <Grid key={`${k}_${v}`} item xs={6} sm={3}>
-                <CardCandidato />
-              </Grid>
-            );
-          })}
+        {candidates.map((candidato, k) => {
+          return (
+            <Grid key={`${k}`} item xs={6} sm={3}>
+              <CardCandidato candidato={candidato} />
+            </Grid>
+          );
+        })}
       </Grid>
     </ContainerCustom>
   );

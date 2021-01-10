@@ -10,6 +10,11 @@ import ModalCandidato from "../../components/ModalCandidato";
 export default function Index({ candidato }) {
   const k = 0;
   const [isOpenModal, setIsOpenModal] = useState(false);
+  const { skills } = candidato;
+
+  function openLink() {
+    window.open(candidato.linkedin);
+  }
   return (
     <>
       <ModalCandidato
@@ -17,35 +22,32 @@ export default function Index({ candidato }) {
         handler={(data) => console.log(data)}
         closeModal={() => setIsOpenModal(false)}
         initialData={{ ...candidato }}
+        isEdit={true}
       />
       <CardCustom>
         <ImageContent
           alt="image "
-          src={`https://ui-avatars.com/api/?size=128&name=${k}&background=0D8ABC&color=fff`}
+          src={`https://ui-avatars.com/api/?size=128&name=${candidato.nome}&background=0D8ABC&color=fff`}
         />
         <ContentText>
-          <Typography>{`Candidato nº ${k}`}</Typography>
+          <Typography>{candidato.nome}</Typography>
           <Typography
             variant="subtitle2"
             color="textSecondary"
             gutterBottom
-          >{`${k + 20} anos`}</Typography>
+          >{`${candidato.idade} anos`}</Typography>
         </ContentText>
         <PerfectScrollbar style={{ maxWidth: "100%" }}>
           <Typography variant="subtitle2" color="textSecondary" gutterBottom>
-            {Array(Math.round(Math.random() * 25))
-              .fill()
-              .map((i, j) => {
-                return <Chip label={`Skill ${j}`} style={{ margin: "2px" }} />;
-              })}
+            {skills.map((skill, j) => {
+              return <Chip label={skill.name} style={{ margin: "2px" }} />;
+            })}
           </Typography>
         </PerfectScrollbar>
         <ContentText style={{ width: "100%" }}>
-          <Typography
-            variant="subtitle2"
-            color="textSecondary"
-            gutterBottom
-          >{`${k}C@mail.com`}</Typography>
+          <Typography variant="subtitle2" color="textSecondary" gutterBottom>
+            {candidato.email}
+          </Typography>
           <Button
             variant="contained"
             size="small"
@@ -55,6 +57,7 @@ export default function Index({ candidato }) {
               width: "95%",
             }}
             startIcon={<LinkedInIcon />}
+            onClick={openLink}
           >
             Ver Linkedin
           </Button>

@@ -3,7 +3,7 @@ import { Container as ContainerMD } from "@material-ui/core";
 export const Container = styled(ContainerMD)`
   background: #fff;
   /* height: 50%; */
-  width: 50%;
+  width: 50%!important;
   border-radius: 2%;
   padding: 15px;
   form {

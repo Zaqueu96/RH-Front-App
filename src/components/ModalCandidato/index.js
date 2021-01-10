@@ -16,6 +16,7 @@ import schema from "./schema";
 import PropTypes from "prop-types";
 export default function ModalCandidato({
   isOpen,
+  isEdit,
   handler,
   closeModal,
   initialData,
@@ -80,7 +81,7 @@ export default function ModalCandidato({
     >
       <Container>
         <Information>
-          <span>Registrar Novo Candidato</span>
+          <span>{`${isEdit ? "Registrar Novo" : "Editar"} Candidato`}</span>
         </Information>
         <Form
           onSubmit={submit}
@@ -133,10 +134,12 @@ export default function ModalCandidato({
 
 ModalCandidato.propTypes = {
   isOpen: PropTypes.bool.isRequired,
+  isEdit: PropTypes.bool.isRequired,
   handler: PropTypes.func.isRequired,
   closeModal: PropTypes.func.isRequired,
   initialData: PropTypes.object.isRequired,
 };
 ModalCandidato.defaultProps = {
   initialData: {},
+  isEdit: false,
 };

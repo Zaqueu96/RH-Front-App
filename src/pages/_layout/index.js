@@ -64,9 +64,9 @@ export default function Layout({ children }) {
         </AppBar>
       </Header>
       <Content>{children}</Content>
-      <Footer>
+      {/* <Footer>
         <Typography variant="subtitle2">Gerenciamento de candidatos</Typography>
-      </Footer>
+      </Footer> */}
     </ContainerCustom>
   );
 }

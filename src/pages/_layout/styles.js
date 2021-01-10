@@ -1,7 +1,7 @@
 import styled from "styled-components";
 import { Paper, Container } from "@material-ui/core";
 
-export const ContainerCustom = styled(Container)`
+export const ContainerCustom = styled.div`
   display: flex;
   justify-content: center;
   flex-direction: column;
@@ -14,8 +14,9 @@ export const Header = styled.div`
     justify-content: space-between;
   }
 `;
-export const Content = styled(Paper)`
+export const Content = styled.div`
   width: 100%;
+  height: calc(100vh - 15vh);
 `;
 
 export const Footer = styled.div``;
