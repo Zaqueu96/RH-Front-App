@@ -2,11 +2,15 @@ import styled, { css } from "styled-components";
 import { Container as ContainerMD } from "@material-ui/core";
 export const Container = styled(ContainerMD)`
   background: #fff;
-  /* height: 50%; */
   width: 50% !important;
   max-width: 600px;
   border-radius: 2%;
   padding: 15px;
+
+  .MuiContainer-root {
+    border: none !important;
+  }
+  
   form {
     display: flex;
     justify-content: center;
@@ -31,6 +35,7 @@ export const ContentButton = styled.div`
   width: 50%;
   display: flex;
   justify-content: space-evenly;
+  margin-top: 10px;
 `;
 
 export const FieldSetBox = styled.fieldset`

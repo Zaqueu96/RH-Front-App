@@ -1,5 +1,8 @@
 import React, { useState, useCallback, useEffect } from "react";
 import { Modal, Button, Chip } from "@material-ui/core";
+import SaveIcon from "@material-ui/icons/Save";
+import CloseIcon from "@material-ui/icons/Close";
+
 import {
   Container,
   ContentButton,
@@ -105,7 +108,7 @@ export default function ModalCandidato({
         justifyContent: "center",
       }}
     >
-      <Container>
+      <Container maxWidth={false} >
         <Information>
           <span>{`${!isEdit ? "Registrar Novo" : "Editar"} Candidato`}</span>
         </Information>
@@ -136,10 +139,20 @@ export default function ModalCandidato({
             </p>
           </ContentError>
           <ContentButton>
-            <Button type="submit" variant="contained" color="primary">
+            <Button
+              type="submit"
+              variant="contained"
+              color="primary"
+              startIcon={<SaveIcon />}
+            >
               Salvar
             </Button>
-            <Button variant="contained" color="secondary" onClick={closeModal}>
+            <Button
+              variant="contained"
+              color="secondary"
+              startIcon={<CloseIcon />}
+              onClick={closeModal}
+            >
               Cancelar
             </Button>
           </ContentButton>
